@@ -44,6 +44,6 @@ This project is intended as a learning and demonstration tool for Yii2 architect
 
 ### 1️⃣ Clone and Install Dependencies
 ```bash
-git clone <your-repo-url> content-management
+git clone https://github.com/muhammadkhalid621/content-yii
 cd content-management
 composer install
