@@ -37,7 +37,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             'brandUrl'   => Yii::$app->homeUrl,
             'options'    => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top'],
         ]);
-
         $menuItemsLeft = [
             ['label' => 'Home', 'url' => ['/site/index']],
         ];
@@ -47,9 +46,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             $menuItemsLeft[] = ['label' => 'Articles', 'url' => ['/content/index']];
             $menuItemsLeft[] = ['label' => 'Files', 'url' => ['/file/index']];
             $menuItemsLeft[] = ['label' => 'Audit', 'url' => ['/audit/index']];
-            // Optional:
-            // $menuItemsLeft[] = ['label' => 'About', 'url' => ['/site/about']];
-            // $menuItemsLeft[] = ['label' => 'Contact', 'url' => ['/site/contact']];
+
+            // Show "Users" only for admin
+            if (Yii::$app->user->identity->username === 'admin') {
+                $menuItemsLeft[] = ['label' => 'Users', 'url' => ['/user/index']];
+            }
         }
 
         echo Nav::widget([

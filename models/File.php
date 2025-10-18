@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 use yii\behaviors\TimestampBehavior;
@@ -21,9 +22,12 @@ class File extends BaseTenantActiveRecord
     public function rules()
     {
         return [
-            [['original_name','path'], 'required'],
-            [['mime_type'], 'string', 'max' => 100],
-            [['size'], 'integer'],
+            [['tenant_id', 'original_name', 'path', 'mime_type', 'size'], 'required'],
+            [['tenant_id', 'size', 'created_at', 'updated_at', 'created_by'], 'integer'],
+            [['original_name', 'path', 'mime_type'], 'string', 'max' => 255],
+            // soft validation hint for types
+            ['mime_type', 'match', 'pattern' => '~^(image/|application/pdf|text/)~', 'message' => 'Only images, PDFs, or text files allowed.'],
+            ['size', 'integer', 'min' => 1, 'max' => 20 * 1024 * 1024, 'tooBig' => 'Max 20MB'],
         ];
     }
 }

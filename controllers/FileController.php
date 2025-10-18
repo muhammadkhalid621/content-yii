@@ -97,8 +97,17 @@ class FileController extends Controller
 
     public function actionServe($id)
     {
-        $f = File::findOne($id);
-        if (!$f) throw new \yii\web\NotFoundHttpException();
-        return Yii::$app->response->sendFile($f->path, $f->original_name);
+        $m = File::findOne($id);
+        if (!$m) throw new \yii\web\NotFoundHttpException();
+
+        // optional: permission check
+        // if (!Yii::$app->user->can('file.view')) throw new \yii\web\ForbiddenHttpException();
+
+        if (!is_file($m->path)) throw new \yii\web\NotFoundHttpException('File missing on disk.');
+
+        return Yii::$app->response->sendFile($m->path, $m->original_name, [
+            'mimeType' => $m->mime_type,
+            'inline'   => str_starts_with($m->mime_type, 'image/') || $m->mime_type === 'application/pdf',
+        ]);
     }
 }

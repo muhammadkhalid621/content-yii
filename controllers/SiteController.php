@@ -50,4 +50,29 @@ class SiteController extends Controller
     {
         return $this->render('error');
     }
+
+    public function actionRequestPasswordReset()
+    {
+        $model = new \app\models\forms\PasswordResetRequestForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail()) {
+                Yii::$app->session->setFlash('success', 'Check your email for the reset link.');
+                return $this->goHome();
+            }
+            Yii::$app->session->setFlash('error', 'Email not found.');
+        }
+        return $this->render('requestPasswordResetToken', ['model' => $model]);
+    }
+
+    public function actionResetPassword($token)
+    {
+        $user = \app\models\User::findByPasswordResetToken($token);
+        if (!$user) throw new \yii\web\BadRequestHttpException('Invalid or expired token.');
+        $form = new \app\models\forms\ResetPasswordForm($user);
+        if ($form->load(Yii::$app->request->post()) && $form->validate() && $form->reset()) {
+            Yii::$app->session->setFlash('success', 'Password changed. You can log in now.');
+            return $this->redirect(['/site/login']);
+        }
+        return $this->render('resetPassword', ['model' => $form]);
+    }
 }
