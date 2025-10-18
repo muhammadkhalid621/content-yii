@@ -1,49 +1,76 @@
-# Yii2 Multi-Tenant CMS Prototype
+# Multi-Tenant Content Management System (Yii2 CMS Prototype)
 
-A complete prototype CMS built on **Yii2**, featuring **multi-tenant isolation**, **role-based access control**, **file management**, **audit logging**, and a **REST API (v1)**.  
-This project is intended as a learning and demonstration tool for Yii2 architecture, RBAC, and modular design.
+This project is a **multi-tenant CMS prototype** built on the **Yii2 Framework** with full **role-based access control (RBAC)**, **file management**, and **REST API integration**.
+
+It supports:
+- Multi-tenant user management
+- Role-based access (Admin, Editor, Viewer)
+- Content creation (articles, posts)
+- File upload & serving
+- Audit logging
+- REST API (v1) for external integrations
 
 ---
 
 ## 🚀 Features
-- Multi-tenant architecture (`tenant_id`-based isolation)
-- Roles & Permissions: **Admin**, **Editor**, **Viewer**
-- User management (CRUD, login/logout, password hash)
-- Content management (create, edit, publish, archive)
-- File uploads with validation and metadata
-- Audit logging of user actions and CRUD events
-- REST API (`/api/v1`) with Bearer authentication
-- Responsive Bootstrap 5 UI with top-bar search and pagination
-- Unified search filters above every table
+
+### 1. Authentication & Access
+- Login / Logout with session handling
+- Password reset via email token
+- Role-based access control (RBAC)
+- Tenant-based user isolation
+
+### 2. User Management
+- CRUD operations for users
+- Assign roles (Admin, Editor, Viewer)
+- Manage tenants
+- Search and filter by username or email
+
+### 3. Content Management
+- Create, edit, delete, and view articles
+- Rich text editor for content body
+- Audit log for all user actions
+
+### 4. File Management
+- Upload and organize media files
+- Auto-creates tenant-specific upload directories
+- Validates file type and size
+- Serve or download files securely
+
+### 5. Audit Logging
+- Tracks all CRUD actions and user activity
+- Logs stored in DB with timestamps and user references
+
+### 6. RESTful API
+- Versioned API (`/api/v1/`)
+- Endpoints for:
+  - `/api/v1/auth/login`
+  - `/api/v1/user`
+  - `/api/v1/content`
+  - `/api/v1/file`
+- Secured with Bearer tokens
+- Follows Yii2 REST best practices
 
 ---
 
-## 🧰 Tech Stack
-| Component | Technology |
-|------------|-------------|
-| Backend | Yii2 Framework |
+## 🧱 Technology Stack
+
+| Layer | Tech |
+|-------|------|
+| Backend | Yii2 Framework (PHP 8.2+) |
 | Frontend | Yii2 Views + Bootstrap 5 |
 | Database | MySQL / MariaDB |
-| API | RESTful endpoints (`/api/v1`) |
-| Auth | Sessions (web) + Bearer Tokens (API) |
-| File Storage | Local (runtime/uploads) |
-| Audit Logs | Database logging via `AuditBehavior` |
+| Storage | Local filesystem (`@app/runtime/uploads/`) |
+| Auth | RBAC (`yii\rbac\DbManager`) |
+| API | REST (Yii2 REST controllers) |
 
 ---
 
-## 🧑‍💻 Requirements
-- PHP **8.1+**
-- Composer
-- MySQL (e.g., via **MAMP**)
-- OpenSSL, mbstring, PDO extensions
-- NodeJS optional (for asset builds)
+## ⚙️ Installation
 
----
-
-## ⚙️ Setup Instructions
-
-### 1️⃣ Clone and Install Dependencies
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/muhammadkhalid621/content-yii
 cd content-management
 composer install
+
